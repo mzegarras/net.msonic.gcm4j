@@ -27,7 +27,7 @@
 					com.ibm.websphere.naming.WsnInitialContextFactory
 				</prop>
 				<prop key="java.naming.provider.url">
-					iiop://localhost:2809
+					${jms.jndi.url}
 				</prop>
 			</props>
 		</property>
@@ -40,7 +40,7 @@
 			<ref bean="jndiTemplate" />
 		</property>
 		<property name="jndiName">
-			<value>jms/jmsconection</value>
+			<value>${jms.jndi.connection}</value>
 		</property>
 	</bean>
 
@@ -49,7 +49,7 @@
 			<ref bean="jndiTemplate" />
 		</property>
 		<property name="jndiName">
-			<value>jms/q.noti.rq</value>
+			<value>${jms.jndi.request_queue}</value>
 		</property>
 	</bean>
 	
@@ -58,7 +58,7 @@
 			<ref bean="jndiTemplate" />
 		</property>
 		<property name="jndiName">
-			<value>jms/q.noti.rq</value>
+			<value>${jms.jndi.request_queue}</value>
 		</property>
 	</bean>
 	
