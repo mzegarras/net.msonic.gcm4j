@@ -33,11 +33,9 @@ public class SendMailListener implements MessageListener {
              //LOG.info(((TextMessage) message).getText());
              
              final String msg = ((TextMessage) message).getText();
-             logger.info(msg);
              
-             
-             
-             logger.debug("JMSCorrelationID:{} with birthday {}", message.getJMSMessageID());
+
+             logger.debug("JMSCorrelationID:{} , message {}", message.getJMSMessageID(),msg);
              
              
              jmsTemplate.send(message.getJMSReplyTo(),new MessageCreator() {
