@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="DEBUG">
+<Configuration>
 
 	<Appenders>
-		<!--Console name="Console" target="SYSTEM_OUT"> <PatternLayout pattern="%d{YYYY-MM-dd 
-			HH:mm:ss} [%t] %-5p %c{1}:%L - %msg%n" /> </Console -->
 
-		<!--RollingFile name="RollingFile" filename="./CrunchifyTest.log" filepattern="${logPath}/%d{YYYYMMddHHmmss}-fargo.log"> 
-			<PatternLayout pattern="%d{YYYY-MM-dd HH:mm:ss} [%t] %-5p %c{1}:%L - %msg%n" 
-			/> <Policies> <SizeBasedTriggeringPolicy size="100 MB" /> </Policies> <DefaultRolloverStrategy 
-			max="20" /> </RollingFile -->
 
-		<File name="A1" fileName="log.log" append="false">
-			<PatternLayout pattern="%t %-5p %c{2} - %m%n" />
-		</File>
+		<RollingFile name="A1" filePattern="./target/log-%d{yyyy-MM-dd}-%i.log"
+			fileName="./target/log.log" append="true">
+			<PatternLayout pattern="%d{YYYY-MM-dd HH:mm:ss} [%t] %-5p %c{1}:%L - %msg%n" />
+			 <Policies>
+                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="1 MB"/>
+            </Policies>
+            
+			<DefaultRolloverStrategy max="20" />
+		</RollingFile>
+
 		<Console name="STDOUT" target="SYSTEM_OUT">
 			<PatternLayout pattern="%d %-5p [%t] %C{2} (%F:%L) - %m%n" />
 		</Console>
@@ -22,27 +24,21 @@
 	</Appenders>
 	<Loggers>
 
-		<Root level="DEBUG">
-			<AppenderRef ref="A1" />
-			<AppenderRef ref="STDOUT" />
+		<Root level="debug">
+			<appender-ref ref="STDOUT" />
+			<appender-ref ref="A1" />
+
 		</Root>
 
-		<Logger name="org.apache.log4j.xml" level="DEBUG">
-			<AppenderRef ref="A1" />
-			<AppenderRef ref="STDOUT" />
-		</Logger>
-
-
-		<logger name="log4j.logger.httpclient.wire" level="DEBUG">
-			<AppenderRef ref="A1" />
-			<AppenderRef ref="STDOUT" />
+		
+		<logger name="log4j.logger.httpclient.wire" level="OFF">
+			<appender-ref ref="A1" />
 		</logger>
-
-		<logger name="org.springframework" level="DEBUG">
-			<AppenderRef ref="A1" />
-			<AppenderRef ref="STDOUT" />
+		
+		<logger name="org.springframework" level="OFF">
+			<appender-ref ref="STDOUT" />
+			<appender-ref ref="A1" />
 		</logger>
-
 		<logger name="org.springframework.web.servlet" level="OFF" />
 		<logger name="org.springframework.beans" level="OFF" />
 		<logger name="org.springframework.core" level="OFF" />
@@ -52,11 +48,9 @@
 		<logger name="org.springframework.aop" level="OFF" />
 		<logger name="org.springframework.cache" level="OFF" />
 		<logger name="org.springframework.jndi" level="OFF" />
-
-		<logger name="org.springframework.web.client.RestTemplate"
-			level="DEBUG">
-			<AppenderRef ref="A1" />
-			<AppenderRef ref="STDOUT" />
+		<logger name="org.springframework.web.client.RestTemplate" level="debug">
+			<appender-ref ref="STDOUT" />
+			<appender-ref ref="A1" />
 		</logger>
 
 
