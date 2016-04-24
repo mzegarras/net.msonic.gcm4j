@@ -15,4 +15,6 @@
 	<!-- Our REST Web Service client -->
 	<bean id="restTemplate" class="org.springframework.web.client.RestTemplate"/>
 	
+	
+	
 </beans>
