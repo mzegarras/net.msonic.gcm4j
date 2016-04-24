@@ -9,7 +9,7 @@
 			<PatternLayout pattern="%d{YYYY-MM-dd HH:mm:ss} [%t] %-5p %c{1}:%L - %msg%n" />
 			 <Policies>
                 <TimeBasedTriggeringPolicy />
-                <SizeBasedTriggeringPolicy size="1 MB"/>
+                <SizeBasedTriggeringPolicy size="100KB"/>
             </Policies>
             
 			<DefaultRolloverStrategy max="20" />
@@ -31,23 +31,23 @@
 		</Root>
 
 		
-		<logger name="log4j.logger.httpclient.wire" level="OFF">
+		<logger name="log4j.logger.httpclient.wire" level="debug">
 			<appender-ref ref="A1" />
 		</logger>
 		
-		<logger name="org.springframework" level="OFF">
+		<logger name="org.springframework" level="debug">
 			<appender-ref ref="STDOUT" />
 			<appender-ref ref="A1" />
 		</logger>
-		<logger name="org.springframework.web.servlet" level="OFF" />
-		<logger name="org.springframework.beans" level="OFF" />
-		<logger name="org.springframework.core" level="OFF" />
-		<logger name="org.springframework.context" level="OFF" />
-		<logger name="org.springframework.ui" level="OFF" />
-		<logger name="org.springframework.web.context" level="OFF" />
-		<logger name="org.springframework.aop" level="OFF" />
-		<logger name="org.springframework.cache" level="OFF" />
-		<logger name="org.springframework.jndi" level="OFF" />
+		<logger name="org.springframework.web.servlet" level="debug" />
+		<logger name="org.springframework.beans" level="debug" />
+		<logger name="org.springframework.core" level="debug" />
+		<logger name="org.springframework.context" level="debug" />
+		<logger name="org.springframework.ui" level="debug" />
+		<logger name="org.springframework.web.context" level="debug" />
+		<logger name="org.springframework.aop" level="debug" />
+		<logger name="org.springframework.cache" level="debug" />
+		<logger name="org.springframework.jndi" level="debug" />
 		<logger name="org.springframework.web.client.RestTemplate" level="debug">
 			<appender-ref ref="STDOUT" />
 			<appender-ref ref="A1" />
