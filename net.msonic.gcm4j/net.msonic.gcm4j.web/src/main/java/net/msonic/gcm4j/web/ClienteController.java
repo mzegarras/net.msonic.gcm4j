@@ -8,7 +8,8 @@ import javax.jms.Message;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jms.core.JmsTemplate;
@@ -22,8 +23,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/cliente")
 public class ClienteController {
 
-	final static Logger logger = Logger.getLogger(ClienteController.class);
-
+	
+	private static final Logger logger = LogManager.getLogger(ClienteController.class);
+	
 	@Autowired
 	@Qualifier("jmsTemplate1")
 	JmsTemplate jmsTemplate;
