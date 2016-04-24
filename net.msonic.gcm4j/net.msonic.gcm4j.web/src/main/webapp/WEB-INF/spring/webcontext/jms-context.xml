@@ -58,14 +58,12 @@
 			<ref bean="jndiTemplate" />
 		</property>
 		<property name="jndiName">
-			<value>${jms.jndi.request_queue}</value>
+			<value>${jms.jndi.response_queue}</value>
 		</property>
 	</bean>
 	
 
-
-
-	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+	<bean id="jmsTemplate1" class="org.springframework.jms.core.JmsTemplate">
 		<property name="connectionFactory">
 			<ref bean="jmsQueueConnectionFactory" />
 		</property>
@@ -76,15 +74,31 @@
 			<value>30000</value>
 		</property>
 	</bean>
+	
+	<bean id="jmsTemplate2" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory">
+			<ref bean="jmsQueueConnectionFactory" />
+		</property>
+		<property name="defaultDestination">
+			<ref bean="receiveDestination" />
+		</property>
+		<property name="receiveTimeout">
+			<value>30000</value>
+		</property>
+	</bean>
 
 	
 	<bean id="inMessageListener" class="net.msonic.gcm4j.web.SendMailListener" />
+	
+	<bean id="transactionManager" class="org.springframework.transaction.jta.JtaTransactionManager"/>
 	
 	<bean
 		class="org.springframework.jms.listener.DefaultMessageListenerContainer">
 		<property name="connectionFactory" ref="jmsQueueConnectionFactory" />
 		<property name="destination" ref="receiveDestination" />
 		<property name="messageListener" ref="inMessageListener" />
+		<property name="sessionTransacted" value="true"/>
+		<property name="transactionManager" ref="transactionManager"/>
 	</bean>
 
 
