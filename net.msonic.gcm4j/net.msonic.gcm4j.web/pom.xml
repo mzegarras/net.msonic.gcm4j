@@ -8,10 +8,10 @@
     <version>1.0-SNAPSHOT</version>
   </parent>
   <groupId>net.msonic.gcm4j</groupId>
-  <artifactId>et.msonic.gcm4j.web</artifactId>
+  <artifactId>net.msonic.gcm4j.web</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>war</packaging>
-  <name>et.msonic.gcm4j.web Maven Webapp</name>
+  <name>net.msonic.gcm4j.web Maven Webapp</name>
   <url>http://maven.apache.org</url>
   <dependencies>
     <dependency>
@@ -22,6 +22,6 @@
     </dependency>
   </dependencies>
   <build>
-    <finalName>et.msonic.gcm4j.web</finalName>
+    <finalName>net.msonic.gcm4j.web</finalName>
   </build>
 </project>

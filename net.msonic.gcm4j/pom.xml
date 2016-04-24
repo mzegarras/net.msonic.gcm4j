@@ -7,6 +7,6 @@
   <packaging>pom</packaging>
   <name>net.msonic.gcm4j</name>
   <modules>
-    <module>et.msonic.gcm4j.web</module>
+    <module>net.msonic.gcm4j.web</module>
   </modules>
 </project>
