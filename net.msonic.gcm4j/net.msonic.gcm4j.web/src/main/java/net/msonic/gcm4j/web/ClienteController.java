@@ -17,35 +17,26 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/cliente")
 public class ClienteController {
-	
-	
+
 	final static Logger logger = Logger.getLogger(ClienteController.class);
-	
+
 	@Autowired
 	JmsTemplate jmsTemplate;
-	
-	
-	@RequestMapping(value = "/sendMail/{p1}", method = RequestMethod.GET)
-	public String send(@PathVariable String p1){
-		
-		if(jmsTemplate==null){
-			logger.debug("null");
-		}else{
-			logger.debug("not null");
-			
-			jmsTemplate.send(new MessageCreator(){
 
-				public Message createMessage(Session session) throws JMSException {
-					// TODO Auto-generated method stub
-					TextMessage logMessage = session.createTextMessage();
-		               logMessage.setText("test de clientes");
-		               return logMessage;
-				}
-				
-			});
-		}
-		
-		
+	@RequestMapping(value = "/sendMail/{p1}", method = RequestMethod.GET)
+	public String send(final @PathVariable String p1) {
+
+		jmsTemplate.send(new MessageCreator() {
+
+			public Message createMessage(Session session) throws JMSException {
+				// TODO Auto-generated method stub
+				TextMessage logMessage = session.createTextMessage();
+				logMessage.setText(p1);
+				return logMessage;
+			}
+
+		});
+
 		return p1;
 	}
 }

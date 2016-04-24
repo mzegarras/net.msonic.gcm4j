@@ -29,17 +29,13 @@
 			/WEB-INF/spring/webcontext/jms-context.xml
 			
 		</param-value>
-		<!--
-		/WEB-INF/spring/webcontext/jms-context.xml
-		 /WEB-INF/spring/webcontext/client-config-*.xml, -->
+		<!-- /WEB-INF/spring/webcontext/jms-context.xml /WEB-INF/spring/webcontext/client-config-*.xml, -->
 	</context-param>
 
 
 
 	<listener>
-		<listener-class>
-			org.springframework.web.context.ContextLoaderListener
-		</listener-class>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 
 
@@ -61,6 +57,30 @@
 		<filter-name>encodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+
+	<resource-ref id="ResourceRef_1213263339439">
+		<description>The QueueConnectionFactory for the service</description>
+		<res-ref-name>queueConnectionFactory</res-ref-name>
+		<res-type>javax.jms.QueueConnectionFactory</res-type>
+		<res-auth>Container</res-auth>
+		<res-sharing-scope>Shareable</res-sharing-scope>
+	</resource-ref>
+
+	<resource-ref id="ResourceRef_1213263381973">
+		<description>the inbox Queue</description>
+		<res-ref-name>Q.NOTI.RQ</res-ref-name>
+		<res-type>javax.jms.Queue</res-type>
+		<res-auth>Container</res-auth>
+		<res-sharing-scope>Shareable</res-sharing-scope>
+	</resource-ref>
+	
+	<resource-ref id="ResourceRef_1213263428554">
+     <description>The outbox Queue (reply)</description>
+     <res-ref-name>Q.NOTI.RS</res-ref-name>
+     <res-type>javax.jms.Queue</res-type>
+     <res-auth>Container</res-auth>
+     <res-sharing-scope>Shareable</res-sharing-scope>
+ </resource-ref>
 
 
 

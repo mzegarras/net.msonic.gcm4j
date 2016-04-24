@@ -49,18 +49,21 @@
 			<ref bean="jndiTemplate" />
 		</property>
 		<property name="jndiName">
-			<value>jms/jms-test</value>
+			<value>jms/q.noti.rq</value>
 		</property>
 	</bean>
-
-	<!--bean id="receiveDestination" class="org.springframework.jndi.JndiObjectFactoryBean">
+	
+	<bean id="receiveDestination" class="org.springframework.jndi.JndiObjectFactoryBean">
 		<property name="jndiTemplate">
 			<ref bean="jndiTemplate" />
 		</property>
 		<property name="jndiName">
-			<value>queue/CreditReqeustReceiveQueue</value>
+			<value>jms/q.noti.rq</value>
 		</property>
-	</bean-->
+	</bean>
+	
+
+
 
 	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
 		<property name="connectionFactory">
@@ -74,17 +77,15 @@
 		</property>
 	</bean>
 
-
-
-
-	<!--bean id="sendDestination" class="org.springframework.jndi.JndiObjectFactoryBean"> 
-		<property name="jndiTemplate"> <ref bean="jndiTemplate" /> </property> <property 
-		name="jndiName"> <value>jms/jms-test</value> </property> </bean> <bean id="jmsTemplate" 
-		class="org.springframework.jms.core.JmsTemplate102"> <property name="connectionFactory"> 
-		<ref bean="jmsQueueConnectionFactory" /> </property> <property name="defaultDestination"> 
-		<ref bean="destination" /> </property> <property name="receiveTimeout"> <value>30000</value> 
-		</property> </bean -->
-
+	
+	<bean id="inMessageListener" class="net.msonic.gcm4j.web.SendMailListener" />
+	
+	<bean
+		class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="jmsQueueConnectionFactory" />
+		<property name="destination" ref="receiveDestination" />
+		<property name="messageListener" ref="inMessageListener" />
+	</bean>
 
 
 </beans>		
