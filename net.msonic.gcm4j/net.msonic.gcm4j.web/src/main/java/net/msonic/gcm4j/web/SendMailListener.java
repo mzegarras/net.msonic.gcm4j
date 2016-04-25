@@ -26,8 +26,7 @@ public class SendMailListener implements MessageListener {
 		// TODO Auto-generated method stub
 		
 		
-		
-		
+		logger.debug("onMessage Start");
 		
 		 try {
              //LOG.info(((TextMessage) message).getText());

@@ -26,10 +26,9 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
 			/WEB-INF/spring/webcontext/appServlet-context.xml,
-			/WEB-INF/spring/webcontext/jms-context.xml
-			
+			/WEB-INF/spring/webcontext/jms-context.xml,
+			/WEB-INF/spring/webcontext/si-context.xml
 		</param-value>
-		<!-- /WEB-INF/spring/webcontext/jms-context.xml /WEB-INF/spring/webcontext/client-config-*.xml, -->
 	</context-param>
 
 

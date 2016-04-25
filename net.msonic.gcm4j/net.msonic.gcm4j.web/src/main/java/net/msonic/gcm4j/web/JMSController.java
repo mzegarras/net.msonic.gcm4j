@@ -20,11 +20,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/cliente")
-public class ClienteController {
+@RequestMapping("/jms")
+public class JMSController {
 
 	
-	private static final Logger logger = LogManager.getLogger(ClienteController.class);
+	private static final Logger logger = LogManager.getLogger(JMSController.class);
 	
 	@Autowired
 	@Qualifier("jmsTemplate1")
