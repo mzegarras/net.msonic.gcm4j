@@ -54,7 +54,7 @@ public class ClienteControllerTest  {
 		 
 		 //String result = restTemplate.getForObject("http://192.168.0.14:9080/gcm4jweb/cliente/sendMail/{parametro}", String.class, "a");
 		
-		 ResponseEntity<String> response = restTemplate.getForEntity("http://192.168.0.13:9080/gcm4jweb/cliente/sendMail/{parametro}", String.class, parametro);
+		 ResponseEntity<String> response = restTemplate.getForEntity("http://192.168.0.17:9080/gcm4jweb/cliente/sendMail/{parametro}", String.class, parametro);
 		 
 		 assertEquals(200, response.getStatusCode().value());
 	     assertNotNull(response.getBody());
@@ -77,7 +77,63 @@ public class ClienteControllerTest  {
          params.add(new Object[] { "b", "B"});
          params.add(new Object[] { "c", "C"});
          params.add(new Object[] { "d", "D"});
+         params.add(new Object[] { "e", "E"});
+         params.add(new Object[] { "r", "R"});
+         params.add(new Object[] { "g", "G"});
+         params.add(new Object[] { "h", "H"});
+         params.add(new Object[] { "i", "I"});
+         params.add(new Object[] { "j", "J"});
+         params.add(new Object[] { "k", "K"});
+         params.add(new Object[] { "k", "K"});
+         params.add(new Object[] { "k", "K"});
+         params.add(new Object[] { "k", "K"});
+         params.add(new Object[] { "k", "K"});
+         params.add(new Object[] { "k", "K"});
+         params.add(new Object[] { "a", "A"});
+         params.add(new Object[] { "b", "B"});
+         params.add(new Object[] { "c", "C"});
+         params.add(new Object[] { "d", "D"});
+         params.add(new Object[] { "e", "E"});
+         params.add(new Object[] { "r", "R"});
+         params.add(new Object[] { "g", "G"});
+         params.add(new Object[] { "h", "H"});
+         params.add(new Object[] { "i", "I"});
+         params.add(new Object[] { "j", "J"});
+         params.add(new Object[] { "k", "K"});
+         params.add(new Object[] { "k", "K"});
+         params.add(new Object[] { "k", "K"});
+         params.add(new Object[] { "k", "K"});
+         params.add(new Object[] { "k", "K"});
+         params.add(new Object[] { "a", "A"});
+         params.add(new Object[] { "b", "B"});
+         params.add(new Object[] { "c", "C"});
+         params.add(new Object[] { "d", "D"});
+         params.add(new Object[] { "e", "E"});
+         params.add(new Object[] { "r", "R"});
+         params.add(new Object[] { "g", "G"});
+         params.add(new Object[] { "h", "H"});
+         params.add(new Object[] { "i", "I"});
+         params.add(new Object[] { "j", "J"});
+         params.add(new Object[] { "k", "K"});
+         params.add(new Object[] { "k", "K"});
+         params.add(new Object[] { "k", "K"});
+         params.add(new Object[] { "k", "K"});
+         params.add(new Object[] { "k", "K"});
+         params.add(new Object[] { "a", "A"});
+         params.add(new Object[] { "b", "B"});
+         params.add(new Object[] { "c", "C"});
+         params.add(new Object[] { "d", "D"});
+         params.add(new Object[] { "e", "E"});
+         params.add(new Object[] { "r", "R"});
+         params.add(new Object[] { "g", "G"});
+         params.add(new Object[] { "h", "H"});
+         params.add(new Object[] { "i", "I"});
+         params.add(new Object[] { "j", "J"});
+         params.add(new Object[] { "k", "K"});
+         params.add(new Object[] { "k", "K"});
+         params.add(new Object[] { "k", "K"});
 
+        
          return params;
      }
 }
