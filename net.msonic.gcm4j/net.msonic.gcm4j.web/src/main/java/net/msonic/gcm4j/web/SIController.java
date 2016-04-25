@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import net.msonic.gcm4j.web.si.BusGateway;
@@ -20,8 +21,8 @@ public class SIController {
 	@Autowired
 	BusGateway busGateway;
 	
-	@RequestMapping(value = "/sendSync/{p1}", method = RequestMethod.GET)
-	public String sendSync(final @PathVariable String p1) {
+	@RequestMapping(value = "/sendSync", method = RequestMethod.GET)
+	public String sendSync(final @RequestParam(value = "mail") String p1) {
 		
 		
 		SendEmailEvent sendEmailEvent = new SendEmailEvent();
@@ -35,8 +36,8 @@ public class SIController {
 		
 	}
 	
-	@RequestMapping(value = "/sendAsync/{p1}", method = RequestMethod.GET)
-	public String sendAync(final @PathVariable String p1) {
+	@RequestMapping(value = "/sendAsync", method = RequestMethod.GET)
+	public String sendAync(final @RequestParam(value = "mail") String p1) {
 		
 		SendEmailEvent sendEmailEvent = new SendEmailEvent();
 		sendEmailEvent.setContent("Contenido");

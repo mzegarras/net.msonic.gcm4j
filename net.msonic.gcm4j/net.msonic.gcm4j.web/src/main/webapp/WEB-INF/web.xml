@@ -27,7 +27,8 @@
 		<param-value>
 			/WEB-INF/spring/webcontext/appServlet-context.xml,
 			/WEB-INF/spring/webcontext/jms-context.xml,
-			/WEB-INF/spring/webcontext/si-context.xml
+			/WEB-INF/spring/webcontext/si-context.xml,
+			/WEB-INF/spring/webcontext/mail-context.xml
 		</param-value>
 	</context-param>
 
