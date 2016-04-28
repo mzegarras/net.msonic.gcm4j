@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: gcm4jweb2
+  profiles:
+    active: mac
+    

@@ -8,5 +8,6 @@
   <name>net.msonic.gcm4j</name>
   <modules>
     <module>net.msonic.gcm4j.web</module>
+    <module>net.msonic.gcm4j.web2</module>
   </modules>
 </project>

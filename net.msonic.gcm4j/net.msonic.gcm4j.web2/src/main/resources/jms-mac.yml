@@ -1,0 +1,6 @@
+jms:
+  jndi:
+    url: iiop://localhost:2809
+    connection: jms/jmsconection
+    queueRequest: jms/q.noti.rq
+    queueResponse: jms/q.noti.rs
