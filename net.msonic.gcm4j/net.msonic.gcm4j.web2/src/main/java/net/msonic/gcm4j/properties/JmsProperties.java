@@ -7,10 +7,8 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Configuration;
 
 //@ConfigurationProperties(locations = "file:/Proyectos/Apps/config/mail-${spring.profiles.active}.yml", ignoreUnknownFields = false, prefix = "mail")
-@Configuration
-@EnableConfigurationProperties
 @ConfigurationProperties(locations = "classpath:jms-${spring.profiles.active}.yml", ignoreUnknownFields = false, prefix = "jms")
-public class JmsSettings {
+public class JmsProperties {
 
 	@NotNull
 	private Jndi jndi;
