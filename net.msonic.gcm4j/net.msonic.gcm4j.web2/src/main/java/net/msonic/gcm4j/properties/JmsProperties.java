@@ -3,8 +3,6 @@ package net.msonic.gcm4j.properties;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
 
 //@ConfigurationProperties(locations = "file:/Proyectos/Apps/config/mail-${spring.profiles.active}.yml", ignoreUnknownFields = false, prefix = "mail")
 @ConfigurationProperties(locations = "classpath:jms-${spring.profiles.active}.yml", ignoreUnknownFields = false, prefix = "jms")
@@ -27,6 +25,10 @@ public class JmsProperties {
 		private String connection;
 		private String queueRequest;
 		private String queueResponse;
+		private String topicName;
+		private String queueAccountRequest;
+		private String queuePromotionsRequest;
+		private String queueAuditRequest;
 
 		public String getUrl() {
 			return url;
@@ -59,5 +61,40 @@ public class JmsProperties {
 		public void setQueueResponse(String queueResponse) {
 			this.queueResponse = queueResponse;
 		}
+
+		public String getTopicName() {
+			return topicName;
+		}
+
+		public void setTopicName(String topicName) {
+			this.topicName = topicName;
+		}
+
+		public String getQueueAccountRequest() {
+			return queueAccountRequest;
+		}
+
+		public void setQueueAccountRequest(String queueAccountRequest) {
+			this.queueAccountRequest = queueAccountRequest;
+		}
+
+		public String getQueuePromotionsRequest() {
+			return queuePromotionsRequest;
+		}
+
+		public void setQueuePromotionsRequest(String queuePromotionsRequest) {
+			this.queuePromotionsRequest = queuePromotionsRequest;
+		}
+
+		public String getQueueAuditRequest() {
+			return queueAuditRequest;
+		}
+
+		public void setQueueAuditRequest(String queueAuditRequest) {
+			this.queueAuditRequest = queueAuditRequest;
+		}
+
+		
+		
 	}
 }

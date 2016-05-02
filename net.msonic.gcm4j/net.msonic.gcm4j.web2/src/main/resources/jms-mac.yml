@@ -4,3 +4,7 @@ jms:
     connection: jms/jmsconection
     queueRequest: jms/q.noti.rq
     queueResponse: jms/q.noti.rs
+    topicName: jms/t.session.rq
+    queueAccountRequest: jms/q.account.rq
+    queuePromotionsRequest: jms/q.promotions.rq
+    queueAuditRequest: jms/q.audit.rq

@@ -5,7 +5,7 @@
 		 						 http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
 
 	<display-name>gcm4jweb2</display-name>
-	
+
 	<resource-ref id="ResourceRef_1213263339439">
 		<description>The QueueConnectionFactory for the service</description>
 		<res-ref-name>queueConnectionFactory</res-ref-name>
@@ -21,15 +21,52 @@
 		<res-auth>Container</res-auth>
 		<res-sharing-scope>Shareable</res-sharing-scope>
 	</resource-ref>
-	
+
 	<resource-ref id="ResourceRef_1213263428554">
-     <description>The outbox Queue (reply)</description>
-     <res-ref-name>Q.NOTI.RS</res-ref-name>
-     <res-type>javax.jms.Queue</res-type>
-     <res-auth>Container</res-auth>
-     <res-sharing-scope>Shareable</res-sharing-scope>
- </resource-ref>
+		<description>The outbox Queue (reply)</description>
+		<res-ref-name>Q.NOTI.RS</res-ref-name>
+		<res-type>javax.jms.Queue</res-type>
+		<res-auth>Container</res-auth>
+		<res-sharing-scope>Shareable</res-sharing-scope>
+	</resource-ref>
 
 
+
+
+
+
+	<resource-ref id="ResourceRef_1213263428555">
+		<description>Topic Session</description>
+		<res-ref-name>T.LOGGING.RQ</res-ref-name>
+		<res-type>javax.jms.Topic</res-type>
+		<res-auth>Container</res-auth>
+		<res-sharing-scope>Shareable</res-sharing-scope>
+	</resource-ref>
+
+
+	<resource-ref id="ResourceRef_1213263428556">
+		<description>Account</description>
+		<res-ref-name>Q.ACCOUNT.RQ</res-ref-name>
+		<res-type>javax.jms.Queue</res-type>
+		<res-auth>Container</res-auth>
+		<res-sharing-scope>Shareable</res-sharing-scope>
+	</resource-ref>
+
+	<resource-ref id="ResourceRef_1213263428557">
+		<description>PROMOTIONS</description>
+		<res-ref-name>Q.PROMOTIONS.RQ</res-ref-name>
+		<res-type>javax.jms.Queue</res-type>
+		<res-auth>Container</res-auth>
+		<res-sharing-scope>Shareable</res-sharing-scope>
+	</resource-ref>
+
+
+	<resource-ref id="ResourceRef_1213263428558">
+		<description>AUDIT</description>
+		<res-ref-name>Q.AUDIT.RQ</res-ref-name>
+		<res-type>javax.jms.Queue</res-type>
+		<res-auth>Container</res-auth>
+		<res-sharing-scope>Shareable</res-sharing-scope>
+	</resource-ref>
 
 </web-app>

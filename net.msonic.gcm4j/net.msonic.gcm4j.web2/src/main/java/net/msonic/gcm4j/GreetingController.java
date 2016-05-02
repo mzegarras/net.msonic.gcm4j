@@ -43,13 +43,40 @@ public class GreetingController {
 	@Autowired
 	@Qualifier("receiveDestination")
 	Destination receiveDestination;
+	
+	
+	@Autowired
+	@Qualifier("jmsTemplate3")
+	JmsTemplate jmsTemplate3;
+	
 
 	@RequestMapping(value = "/hello/{name}",method = RequestMethod.GET)
 	String hello(final @PathVariable String name) {
 		
 		
+		
+		
+		
+		
 		UUID uuid = UUID.randomUUID();
 		final String randomUUIDString = uuid.toString();
+		
+		
+		
+		jmsTemplate3.send(new MessageCreator() {
+
+			public Message createMessage(Session session) throws JMSException {
+				// TODO Auto-generated method stub
+				TextMessage logMessage = session.createTextMessage();
+				logMessage.setText(name);
+				//logMessage.setJMSCorrelationID(randomUUIDString);
+				//logMessage.setJMSReplyTo(receiveDestination);
+				return logMessage;
+			}
+
+		});
+		
+		
 		
 		
 		Message response = jmsTemplate.sendAndReceive(new MessageCreator() {

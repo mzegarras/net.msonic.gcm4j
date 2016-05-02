@@ -88,6 +88,19 @@ public class JmsConfiguration {
 	}
 	
 	@Bean
+	@Qualifier("topic")
+	public JndiObjectFactoryBean jmsTopic() {
+	    JndiObjectFactoryBean jndiObjectFactoryBean = new JndiObjectFactoryBean();
+
+
+	    jndiObjectFactoryBean.setJndiTemplate(jndiTemplate());
+	    jndiObjectFactoryBean.setJndiName(jmsProperties.getJndi().getTopicName()); //queue name
+	    
+	    return jndiObjectFactoryBean;
+	}
+	
+	
+	@Bean
 	public DefaultMessageListenerContainer queueMessageListener() {
 		
 		DefaultMessageListenerContainer defaultMessageListenerContainer = new DefaultMessageListenerContainer();
@@ -138,6 +151,143 @@ public class JmsConfiguration {
 	    jmsTemplate.setDefaultDestination((Destination) jmsQueueName2().getObject());
 
 	    return jmsTemplate;
+	}
+	
+	
+	@Bean
+	@Qualifier("jmsTemplate3")
+	public JmsTemplate jmsTopicTemplate() {
+	    JmsTemplate jmsTemplate = new JmsTemplate(connectionFactoryProxy());
+
+	    jmsTemplate.setSessionTransacted(false);
+	    jmsTemplate.setReceiveTimeout(5000);
+	    jmsTemplate.setDefaultDestination((Destination) jmsTopic().getObject());
+
+	    return jmsTemplate;
+	}
+	
+	
+	
+	@Bean
+	@Qualifier("queueAccountRequest")
+	public JndiObjectFactoryBean jmsQueueAccount() {
+	    JndiObjectFactoryBean jndiObjectFactoryBean = new JndiObjectFactoryBean();
+
+
+	    jndiObjectFactoryBean.setJndiTemplate(jndiTemplate());
+	    jndiObjectFactoryBean.setJndiName(jmsProperties.getJndi().getQueueAccountRequest()); //queue name
+
+	    return jndiObjectFactoryBean;
+	}
+	
+	@Bean
+	@Qualifier("queuePromotionsRequest")
+	public JndiObjectFactoryBean jmsQueuePromotions() {
+	    JndiObjectFactoryBean jndiObjectFactoryBean = new JndiObjectFactoryBean();
+
+
+	    jndiObjectFactoryBean.setJndiTemplate(jndiTemplate());
+	    jndiObjectFactoryBean.setJndiName(jmsProperties.getJndi().getQueuePromotionsRequest()); //queue name
+
+	    return jndiObjectFactoryBean;
+	}
+	
+	@Bean
+	@Qualifier("queueAuditRequest")
+	public JndiObjectFactoryBean jmsQueueAudit() {
+	    JndiObjectFactoryBean jndiObjectFactoryBean = new JndiObjectFactoryBean();
+
+
+	    jndiObjectFactoryBean.setJndiTemplate(jndiTemplate());
+	    jndiObjectFactoryBean.setJndiName(jmsProperties.getJndi().getQueueAuditRequest()); //queue name
+
+	    return jndiObjectFactoryBean;
+	}
+	
+	
+
+	@Bean
+	public AccountReceiver getAccountReceiver() {
+	    return new AccountReceiver();
+	}
+	
+	@Bean
+	public DefaultMessageListenerContainer accountListener() {
+		
+		DefaultMessageListenerContainer defaultMessageListenerContainer = new DefaultMessageListenerContainer();
+	    defaultMessageListenerContainer.setConnectionFactory(connectionFactoryProxy());
+	    
+	    defaultMessageListenerContainer.setDestination((Destination) jmsQueueAccount().getObject());
+	    
+	    defaultMessageListenerContainer.setMessageListener(getAccountReceiver()); // The actual bean which implements the MessageListener interface
+	    defaultMessageListenerContainer.setSessionTransacted(true);
+	    defaultMessageListenerContainer.setConcurrentConsumers(1); // how many consumers by default
+	    
+	    defaultMessageListenerContainer.setMaxConcurrentConsumers(4); // how many consumers when large number of messages have to be processed
+
+	    defaultMessageListenerContainer.afterPropertiesSet();
+	    defaultMessageListenerContainer.start();
+	    
+	    return defaultMessageListenerContainer;
+	    
+	    
+	}
+	
+	
+	@Bean
+	public AuditReceiver getAuditReceiver() {
+	    return new AuditReceiver();
+	}
+	
+	
+	@Bean
+	public DefaultMessageListenerContainer auditListener() {
+		
+		DefaultMessageListenerContainer defaultMessageListenerContainer = new DefaultMessageListenerContainer();
+	    defaultMessageListenerContainer.setConnectionFactory(connectionFactoryProxy());
+	    
+	    defaultMessageListenerContainer.setDestination((Destination) jmsQueueAudit().getObject());
+	    
+	    defaultMessageListenerContainer.setMessageListener(getAuditReceiver()); // The actual bean which implements the MessageListener interface
+	    defaultMessageListenerContainer.setSessionTransacted(true);
+	    defaultMessageListenerContainer.setConcurrentConsumers(1); // how many consumers by default
+	    
+	    defaultMessageListenerContainer.setMaxConcurrentConsumers(4); // how many consumers when large number of messages have to be processed
+
+	    defaultMessageListenerContainer.afterPropertiesSet();
+	    defaultMessageListenerContainer.start();
+	    
+	    return defaultMessageListenerContainer;
+	    
+	    
+	}
+
+	@Bean
+	public PromotionReceiver getPromotionReceiver() {
+	    return new PromotionReceiver();
+	}
+	
+
+	@Bean
+	public DefaultMessageListenerContainer promotionsListener() {
+		
+		DefaultMessageListenerContainer defaultMessageListenerContainer = new DefaultMessageListenerContainer();
+	    defaultMessageListenerContainer.setConnectionFactory(connectionFactoryProxy());
+	    
+	    defaultMessageListenerContainer.setDestination((Destination) jmsQueuePromotions().getObject());
+	    
+	    defaultMessageListenerContainer.setMessageListener(getPromotionReceiver()); // The actual bean which implements the MessageListener interface
+	    defaultMessageListenerContainer.setSessionTransacted(true);
+	    defaultMessageListenerContainer.setConcurrentConsumers(1); // how many consumers by default
+	    
+	    defaultMessageListenerContainer.setMaxConcurrentConsumers(4); // how many consumers when large number of messages have to be processed
+
+	    defaultMessageListenerContainer.afterPropertiesSet();
+	    defaultMessageListenerContainer.start();
+	    
+	    return defaultMessageListenerContainer;
+	    
+	    
 	}
 	
 	
