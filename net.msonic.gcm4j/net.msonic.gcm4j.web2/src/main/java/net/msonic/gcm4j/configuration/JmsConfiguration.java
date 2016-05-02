@@ -6,6 +6,7 @@ import javax.jms.ConnectionFactory;
 import javax.jms.Destination;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -73,6 +74,19 @@ public class JmsConfiguration {
 	    return jndiObjectFactoryBean;
 	}
 	
+	
+	@Bean
+	@Qualifier("receiveDestination")
+	public JndiObjectFactoryBean jmsQueueName2() {
+	    JndiObjectFactoryBean jndiObjectFactoryBean = new JndiObjectFactoryBean();
+
+
+	    jndiObjectFactoryBean.setJndiTemplate(jndiTemplate());
+	    jndiObjectFactoryBean.setJndiName(jmsProperties.getJndi().getQueueResponse()); //queue name
+
+	    return jndiObjectFactoryBean;
+	}
+	
 	@Bean
 	public DefaultMessageListenerContainer queueMessageListener() {
 		
@@ -103,12 +117,25 @@ public class JmsConfiguration {
 	
 	
 	@Bean
+	@Primary
 	public JmsTemplate jmsSenderTemplate() {
 	    JmsTemplate jmsTemplate = new JmsTemplate(connectionFactoryProxy());
 
 	    jmsTemplate.setSessionTransacted(false);
 	    jmsTemplate.setReceiveTimeout(5000);
 	    jmsTemplate.setDefaultDestination((Destination) jmsQueueName().getObject());
+
+	    return jmsTemplate;
+	}
+	
+	@Bean
+	@Qualifier("jmsTemplate2")
+	public JmsTemplate jmsReceiveTemplate() {
+	    JmsTemplate jmsTemplate = new JmsTemplate(connectionFactoryProxy());
+
+	    jmsTemplate.setSessionTransacted(false);
+	    jmsTemplate.setReceiveTimeout(5000);
+	    jmsTemplate.setDefaultDestination((Destination) jmsQueueName2().getObject());
 
 	    return jmsTemplate;
 	}

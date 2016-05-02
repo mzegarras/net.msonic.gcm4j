@@ -25,4 +25,4 @@ security:
     name: admin
     password: admin
 #logging:
-# config: file:/Proyectos/Apps/config/log4j2-${spring.profiles.active}.yml      
+# config: classpath:log4j2-${spring.profiles.active}.yml   
