@@ -11,6 +11,8 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.jms.annotation.EnableJms;
+import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
 import org.springframework.jms.connection.TransactionAwareConnectionFactoryProxy;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.listener.DefaultMessageListenerContainer;
@@ -21,6 +23,7 @@ import net.msonic.gcm4j.properties.JmsProperties;
 
 @Configuration
 @EnableConfigurationProperties(JmsProperties.class)
+@EnableJms
 public class JmsConfiguration {
 	
 	
@@ -45,6 +48,7 @@ public class JmsConfiguration {
 	
 	
 	@Bean
+	@Primary
 	public JndiObjectFactoryBean jmsConnectionFactory() {
 	    JndiObjectFactoryBean jndiObjectFactoryBean = new JndiObjectFactoryBean();
 
@@ -56,12 +60,32 @@ public class JmsConfiguration {
 	    return jndiObjectFactoryBean;
 	}
 	
+	@Bean
+	public JndiObjectFactoryBean jmsConnectionFactory2() {
+	    JndiObjectFactoryBean jndiObjectFactoryBean = new JndiObjectFactoryBean();
+
+
+	    jndiObjectFactoryBean.setJndiTemplate(jndiTemplate());
+	    jndiObjectFactoryBean.setJndiName("jms/topicconection"); // connectionFactory name.
+	    
+        
+	    return jndiObjectFactoryBean;
+	}
+	
+	
 	
 	@Bean
 	@Primary
 	public TransactionAwareConnectionFactoryProxy connectionFactoryProxy() {
 	    return new TransactionAwareConnectionFactoryProxy((ConnectionFactory) jmsConnectionFactory().getObject());
 	}
+	
+	
+	@Bean
+	public TransactionAwareConnectionFactoryProxy connectionFactoryProxy2() {
+	    return new TransactionAwareConnectionFactoryProxy((ConnectionFactory) jmsConnectionFactory2().getObject());
+	}
+	
 	
 	@Bean
 	public JndiObjectFactoryBean jmsQueueName() {
@@ -90,7 +114,7 @@ public class JmsConfiguration {
 	@Bean
 	@Qualifier("topic")
 	public JndiObjectFactoryBean jmsTopic() {
-	    JndiObjectFactoryBean jndiObjectFactoryBean = new JndiObjectFactoryBean();
+	    JndiObjectFactoryBean jndiObjectFactoryBean = jmsConnectionFactory2();
 
 
 	    jndiObjectFactoryBean.setJndiTemplate(jndiTemplate());
@@ -157,7 +181,7 @@ public class JmsConfiguration {
 	@Bean
 	@Qualifier("jmsTemplate3")
 	public JmsTemplate jmsTopicTemplate() {
-	    JmsTemplate jmsTemplate = new JmsTemplate(connectionFactoryProxy());
+	    JmsTemplate jmsTemplate = new JmsTemplate(connectionFactoryProxy2());
 
 	    jmsTemplate.setSessionTransacted(false);
 	    jmsTemplate.setReceiveTimeout(5000);
@@ -223,7 +247,9 @@ public class JmsConfiguration {
 		DefaultMessageListenerContainer defaultMessageListenerContainer = new DefaultMessageListenerContainer();
 		
 		
-	    defaultMessageListenerContainer.setConnectionFactory(connectionFactoryProxy());
+	    //defaultMessageListenerContainer.setConnectionFactory(connectionFactoryProxy());
+	    
+	    defaultMessageListenerContainer.setConnectionFactory((ConnectionFactory) jmsConnectionFactory2().getObject());
 	    
 	    defaultMessageListenerContainer.setDestination((Destination) jmsTopic().getObject());
 	    
@@ -239,6 +265,8 @@ public class JmsConfiguration {
 	    //defaultMessageListenerContainer.setClientId("listener2");
 	    //defaultMessageListenerContainer.setDurableSubscriptionName("listener2");
 	    defaultMessageListenerContainer.afterPropertiesSet();
+	    
+	    
 	    
 	    
 	    
@@ -264,10 +292,9 @@ public class JmsConfiguration {
 	public DefaultMessageListenerContainer auditListener() {
 		
 		DefaultMessageListenerContainer defaultMessageListenerContainer = new DefaultMessageListenerContainer();
-	    defaultMessageListenerContainer.setConnectionFactory(connectionFactoryProxy());
+		defaultMessageListenerContainer.setConnectionFactory((ConnectionFactory) jmsConnectionFactory2().getObject());
 	    
 	    defaultMessageListenerContainer.setDestination((Destination) jmsTopic().getObject());
-	    
 	    defaultMessageListenerContainer.setMessageListener(getAuditReceiver()); // The actual bean which implements the MessageListener interface
 	    defaultMessageListenerContainer.setSessionTransacted(false);
 	    defaultMessageListenerContainer.setConcurrentConsumers(1); // how many consumers by default
