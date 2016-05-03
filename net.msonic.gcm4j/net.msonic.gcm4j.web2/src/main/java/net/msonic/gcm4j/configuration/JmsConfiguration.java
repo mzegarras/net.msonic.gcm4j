@@ -161,13 +161,14 @@ public class JmsConfiguration {
 
 	    jmsTemplate.setSessionTransacted(false);
 	    jmsTemplate.setReceiveTimeout(5000);
+	    jmsTemplate.setPubSubDomain(true);
 	    jmsTemplate.setDefaultDestination((Destination) jmsTopic().getObject());
 
 	    return jmsTemplate;
 	}
 	
 	
-	
+	/*
 	@Bean
 	@Qualifier("queueAccountRequest")
 	public JndiObjectFactoryBean jmsQueueAccount() {
@@ -202,7 +203,7 @@ public class JmsConfiguration {
 	    jndiObjectFactoryBean.setJndiName(jmsProperties.getJndi().getQueueAuditRequest()); //queue name
 
 	    return jndiObjectFactoryBean;
-	}
+	}*/
 	
 	
 
@@ -211,26 +212,45 @@ public class JmsConfiguration {
 	    return new AccountReceiver();
 	}
 	
+
+	
 	@Bean
 	public DefaultMessageListenerContainer accountListener() {
 		
+		
+		
+		
 		DefaultMessageListenerContainer defaultMessageListenerContainer = new DefaultMessageListenerContainer();
+		
+		
 	    defaultMessageListenerContainer.setConnectionFactory(connectionFactoryProxy());
 	    
-	    defaultMessageListenerContainer.setDestination((Destination) jmsQueueAccount().getObject());
+	    defaultMessageListenerContainer.setDestination((Destination) jmsTopic().getObject());
 	    
 	    defaultMessageListenerContainer.setMessageListener(getAccountReceiver()); // The actual bean which implements the MessageListener interface
-	    defaultMessageListenerContainer.setSessionTransacted(true);
+	    
+	    
+	    defaultMessageListenerContainer.setSessionTransacted(false);
 	    defaultMessageListenerContainer.setConcurrentConsumers(1); // how many consumers by default
 	    
 	    defaultMessageListenerContainer.setMaxConcurrentConsumers(4); // how many consumers when large number of messages have to be processed
-
+	    defaultMessageListenerContainer.setPubSubDomain(true);
+	    //defaultMessageListenerContainer.setSubscriptionDurable(true);
+	    //defaultMessageListenerContainer.setClientId("listener2");
+	    //defaultMessageListenerContainer.setDurableSubscriptionName("listener2");
 	    defaultMessageListenerContainer.afterPropertiesSet();
+	    
+	    
+	    
 	    defaultMessageListenerContainer.start();
+	    
+	    
+	    
 	    
 	    return defaultMessageListenerContainer;
 	    
 	    
+
 	}
 	
 	
@@ -246,14 +266,18 @@ public class JmsConfiguration {
 		DefaultMessageListenerContainer defaultMessageListenerContainer = new DefaultMessageListenerContainer();
 	    defaultMessageListenerContainer.setConnectionFactory(connectionFactoryProxy());
 	    
-	    defaultMessageListenerContainer.setDestination((Destination) jmsQueueAudit().getObject());
+	    defaultMessageListenerContainer.setDestination((Destination) jmsTopic().getObject());
 	    
 	    defaultMessageListenerContainer.setMessageListener(getAuditReceiver()); // The actual bean which implements the MessageListener interface
-	    defaultMessageListenerContainer.setSessionTransacted(true);
+	    defaultMessageListenerContainer.setSessionTransacted(false);
 	    defaultMessageListenerContainer.setConcurrentConsumers(1); // how many consumers by default
 	    
 	    defaultMessageListenerContainer.setMaxConcurrentConsumers(4); // how many consumers when large number of messages have to be processed
-
+	    defaultMessageListenerContainer.setPubSubDomain(true);
+	    
+	    //defaultMessageListenerContainer.setSubscriptionDurable(true);
+	    //defaultMessageListenerContainer.setClientId("listener1");
+	    //defaultMessageListenerContainer.setDurableSubscriptionName("listener1");
 	    defaultMessageListenerContainer.afterPropertiesSet();
 	    defaultMessageListenerContainer.start();
 	    
@@ -261,13 +285,14 @@ public class JmsConfiguration {
 	    
 	    
 	}
+	/*
 
 	@Bean
 	public PromotionReceiver getPromotionReceiver() {
 	    return new PromotionReceiver();
 	}
 	
-
+/*
 	@Bean
 	public DefaultMessageListenerContainer promotionsListener() {
 		
@@ -288,7 +313,7 @@ public class JmsConfiguration {
 	    return defaultMessageListenerContainer;
 	    
 	    
-	}
+	}*/
 	
 	
 }

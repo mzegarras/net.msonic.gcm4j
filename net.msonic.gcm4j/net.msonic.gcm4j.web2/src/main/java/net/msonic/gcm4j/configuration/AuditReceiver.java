@@ -23,8 +23,10 @@ public class AuditReceiver implements MessageListener {
             
             final String msg = ((TextMessage) message).getText();
             
-
+            logger.debug("=======================AuditReceiver===========================");
             logger.debug("JMSCorrelationID:{} , message {}", message.getJMSMessageID(),msg);
+            
+            
             
             
             

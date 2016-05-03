@@ -3,6 +3,8 @@ spring:
     name: webtest
   profiles:
     active: mac
+  jms:
+    pub-sub-domain: true
   boot:
     #admin:
       #url: http://localhost:8080

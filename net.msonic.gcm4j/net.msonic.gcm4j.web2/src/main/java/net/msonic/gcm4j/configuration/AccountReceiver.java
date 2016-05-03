@@ -23,7 +23,8 @@ public class AccountReceiver implements MessageListener {
             
             final String msg = ((TextMessage) message).getText();
             
-
+            
+            logger.debug("*****************AccountReceiver*****************");
             logger.debug("JMSCorrelationID:{} , message {}", message.getJMSMessageID(),msg);
             
             

@@ -3,4 +3,5 @@ spring:
     name: gcm4jweb2
   profiles:
     active: mac
-    
+  jms:
+    pub-sub-domain: true    
