@@ -4,6 +4,8 @@ import java.util.Properties;
 
 import javax.jms.ConnectionFactory;
 import javax.jms.Destination;
+import javax.jms.JMSException;
+import javax.jms.Session;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -16,6 +18,7 @@ import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
 import org.springframework.jms.connection.TransactionAwareConnectionFactoryProxy;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.listener.DefaultMessageListenerContainer;
+import org.springframework.jms.support.destination.DestinationResolver;
 import org.springframework.jndi.JndiObjectFactoryBean;
 import org.springframework.jndi.JndiTemplate;
 
@@ -48,7 +51,6 @@ public class JmsConfiguration {
 	
 	
 	@Bean
-	@Primary
 	public JndiObjectFactoryBean jmsConnectionFactory() {
 	    JndiObjectFactoryBean jndiObjectFactoryBean = new JndiObjectFactoryBean();
 
@@ -60,19 +62,6 @@ public class JmsConfiguration {
 	    return jndiObjectFactoryBean;
 	}
 	
-	@Bean
-	public JndiObjectFactoryBean jmsConnectionFactory2() {
-	    JndiObjectFactoryBean jndiObjectFactoryBean = new JndiObjectFactoryBean();
-
-
-	    jndiObjectFactoryBean.setJndiTemplate(jndiTemplate());
-	    jndiObjectFactoryBean.setJndiName("jms/topicconection"); // connectionFactory name.
-	    
-        
-	    return jndiObjectFactoryBean;
-	}
-	
-	
 	
 	@Bean
 	@Primary
@@ -81,10 +70,7 @@ public class JmsConfiguration {
 	}
 	
 	
-	@Bean
-	public TransactionAwareConnectionFactoryProxy connectionFactoryProxy2() {
-	    return new TransactionAwareConnectionFactoryProxy((ConnectionFactory) jmsConnectionFactory2().getObject());
-	}
+	
 	
 	
 	@Bean
@@ -114,7 +100,7 @@ public class JmsConfiguration {
 	@Bean
 	@Qualifier("topic")
 	public JndiObjectFactoryBean jmsTopic() {
-	    JndiObjectFactoryBean jndiObjectFactoryBean = jmsConnectionFactory2();
+		JndiObjectFactoryBean jndiObjectFactoryBean = new JndiObjectFactoryBean();
 
 
 	    jndiObjectFactoryBean.setJndiTemplate(jndiTemplate());
@@ -161,7 +147,17 @@ public class JmsConfiguration {
 	    jmsTemplate.setSessionTransacted(false);
 	    jmsTemplate.setReceiveTimeout(5000);
 	    jmsTemplate.setDefaultDestination((Destination) jmsQueueName().getObject());
-
+	    jmsTemplate.setPubSubDomain(false);
+	    jmsTemplate.setDestinationResolver(new DestinationResolver() {
+			
+			@Override
+			public Destination resolveDestinationName(Session session, String destinationName, boolean pubSubDomain)
+					throws JMSException {
+				// TODO Auto-generated method stub
+				return session.createQueue(destinationName);
+			}
+		});
+	    
 	    return jmsTemplate;
 	}
 	
@@ -172,8 +168,17 @@ public class JmsConfiguration {
 
 	    jmsTemplate.setSessionTransacted(false);
 	    jmsTemplate.setReceiveTimeout(5000);
+	    jmsTemplate.setPubSubDomain(false);
 	    jmsTemplate.setDefaultDestination((Destination) jmsQueueName2().getObject());
-
+	    jmsTemplate.setDestinationResolver(new DestinationResolver() {
+			
+			@Override
+			public Destination resolveDestinationName(Session session, String destinationName, boolean pubSubDomain)
+					throws JMSException {
+				// TODO Auto-generated method stub
+				return session.createQueue(destinationName);
+			}
+		});
 	    return jmsTemplate;
 	}
 	
@@ -181,13 +186,21 @@ public class JmsConfiguration {
 	@Bean
 	@Qualifier("jmsTemplate3")
 	public JmsTemplate jmsTopicTemplate() {
-	    JmsTemplate jmsTemplate = new JmsTemplate(connectionFactoryProxy2());
+	    JmsTemplate jmsTemplate = new JmsTemplate(connectionFactoryProxy());
 
 	    jmsTemplate.setSessionTransacted(false);
 	    jmsTemplate.setReceiveTimeout(5000);
 	    jmsTemplate.setPubSubDomain(true);
 	    jmsTemplate.setDefaultDestination((Destination) jmsTopic().getObject());
-
+jmsTemplate.setDestinationResolver(new DestinationResolver() {
+			
+			@Override
+			public Destination resolveDestinationName(Session session, String destinationName, boolean pubSubDomain)
+					throws JMSException {
+				// TODO Auto-generated method stub
+				return session.createTopic(destinationName);
+			}
+		});
 	    return jmsTemplate;
 	}
 	
@@ -247,9 +260,9 @@ public class JmsConfiguration {
 		DefaultMessageListenerContainer defaultMessageListenerContainer = new DefaultMessageListenerContainer();
 		
 		
-	    //defaultMessageListenerContainer.setConnectionFactory(connectionFactoryProxy());
+	    defaultMessageListenerContainer.setConnectionFactory(connectionFactoryProxy());
 	    
-	    defaultMessageListenerContainer.setConnectionFactory((ConnectionFactory) jmsConnectionFactory2().getObject());
+	    //defaultMessageListenerContainer.setConnectionFactory((ConnectionFactory) jmsConnectionFactory2().getObject());
 	    
 	    defaultMessageListenerContainer.setDestination((Destination) jmsTopic().getObject());
 	    
@@ -292,7 +305,8 @@ public class JmsConfiguration {
 	public DefaultMessageListenerContainer auditListener() {
 		
 		DefaultMessageListenerContainer defaultMessageListenerContainer = new DefaultMessageListenerContainer();
-		defaultMessageListenerContainer.setConnectionFactory((ConnectionFactory) jmsConnectionFactory2().getObject());
+		defaultMessageListenerContainer.setConnectionFactory(connectionFactoryProxy());
+		
 	    
 	    defaultMessageListenerContainer.setDestination((Destination) jmsTopic().getObject());
 	    defaultMessageListenerContainer.setMessageListener(getAuditReceiver()); // The actual bean which implements the MessageListener interface
