@@ -25,7 +25,7 @@
 								<table width="100%" cellpadding="0" cellspacing="0">
 									<tr>
 										<td class="content-block">
-											<h2>Thanks for using INSPINIA</h2>
+											<h2 th:text="#{constancias.transferencias.title}">Title</h2>
 										</td>
 									</tr>
 									<tr>
@@ -44,25 +44,25 @@
 														<table class="invoice-items" cellpadding="0"
 															cellspacing="0">
 															<tr>
-																<td>Número Operación</td>
+																<td th:text="#{constancias.numeroOperacion}">Número Operación</td>
 																<td class="alignright" th:text="${transaccion.numberTx}">1244</td>
 															</tr>
 															<tr>
-																<td>Cuenta Cargo</td>
+																<td th:text="#{constancias.cuentaCargo}">Cuenta Cargo</td>
 																<td class="alignright">
 																	<p th:text="${transaccion.cuentaCargo} + ' ' + ${transaccion.cuentaCargoMoneda}">Cuenta</p>
 																	<p th:text="${transaccion.cuentaCargoAlias}">Cuenta</p>
 																</td>
 															</tr>
 															<tr>
-																<td th:text="#{home.title}">Cuenta Destino</td>
+																<td th:text="#{constancias.cuentaDestino}">Cuenta Destino</td>
 																<td class="alignright">
 																	<p th:text="${transaccion.cuentaDestino}">Cuenta</p>
 																	<p th:text="${transaccion.nombreDestino}">Alias</p>
 																</td>
 															</tr>
 															<tr class="total">
-																<td class="alignright" width="80%">Moneda y monto:</td>
+																<td class="alignright" width="80%" th:text="#{constancias.moendaMonto}">Moneda y monto:</td>
 																<td class="alignright" th:text="${transaccion.moneda} + ' ' + ${transaccion.monto}">$ 36.00</td>
 															</tr>
 														</table>
