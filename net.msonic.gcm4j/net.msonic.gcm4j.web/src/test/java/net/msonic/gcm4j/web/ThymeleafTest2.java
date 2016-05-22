@@ -35,7 +35,7 @@ public class ThymeleafTest2 {
 	public void testExisting() {
 		
 		
-		executor.execute("classpath:missing.thtest");
+		executor.execute("classpath:thymeleaf/test/simple.thtest");
 		
 		Assert.assertTrue(executor.isAllOK());
 	}
