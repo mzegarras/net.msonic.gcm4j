@@ -50,21 +50,28 @@
 															</tr>
 															<tr>
 																<td th:text="#{constancias.cuentaCargo}">Cuenta Cargo</td>
-																<td class="alignright">
-																	<p th:text="${transaccion.cuentaCargo} + ' ' + ${transaccion.cuentaCargoMoneda}">Cuenta</p>
-																	<p th:text="${transaccion.cuentaCargoAlias}">Cuenta</p>
-																</td>
+																<td class="alignright" th:text="${transaccion.cuentaCargoAlias}">Cuenta</td>
 															</tr>
 															<tr>
 																<td th:text="#{constancias.cuentaDestino}">Cuenta Destino</td>
-																<td class="alignright">
-																	<p th:text="${transaccion.cuentaDestino}">Cuenta</p>
-																	<p th:text="${transaccion.nombreDestino}">Alias</p>
-																</td>
+																<td class="alignright" th:text="${transaccion.cuentaDestino}">Cuenta</td>
 															</tr>
-															<tr class="total">
+															<tr class="total" th:with="decimalDigits=#{format.numbers.decimalDigits},decimalPointType=#{format.numbers.decimalPointType},thousandsPointType=#{format.numbers.thousandsPointType}">
+															
 																<td class="alignright" width="80%" th:text="#{constancias.moendaMonto}">Moneda y monto:</td>
-																<td class="alignright" th:text="${transaccion.moneda} + ' ' + ${transaccion.monto}">$ 36.00</td>
+																
+																
+																
+																	
+																	<td class="alignright">
+																		<p th:text="${#numbers.formatDecimal(transaccion.monto, 0, thousandsPointType, decimalDigits, decimalPointType)}" th:remove="tag"/>
+																	</td>
+																	
+																		
+																
+																
+																
+																
 															</tr>
 														</table>
 													</td>

@@ -1,0 +1,55 @@
+# ------------ separator comment -----------
+%CONTEXT
+nombres = 'Manuel'
+apellidos = 'Zegarra'
+
+
+transaccion = new net.msonic.gcm4j.web.be.TransaccionTO()
+transaccion.numberTx = 7890
+		
+		
+# ------------------------------------------
+%MESSAGES
+constancias.numeroOperacion = Número Operación1
+# ------------------------------------------
+%INPUT
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+	<table>
+		<thead>
+			<tr>
+				<th th:text="${nombres}">Name</th>
+				<th th:text="${apellidos}">Price</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td th:text="#{constancias.numeroOperacion}"></td>
+				<td class="alignright" th:text="${transaccion.numberTx}"></td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>
+# ------------------------------------------
+%OUTPUT 
+<!DOCTYPE html>
+<html>
+<body>
+	<table>
+		<thead>
+			<tr>
+				<th>Manuel</th>
+				<th>Zegarra</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>Número Operación1</td>
+				<td class="alignright">7890</td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>

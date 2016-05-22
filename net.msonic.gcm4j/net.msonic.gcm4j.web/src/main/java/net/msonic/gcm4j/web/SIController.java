@@ -24,7 +24,7 @@ public class SIController {
 	@RequestMapping(value = "/sendSync", method = RequestMethod.GET)
 	public String sendSync(final @RequestParam(value = "mail") String p1) {
 		
-		
+	
 		SendEmailEvent sendEmailEvent = new SendEmailEvent();
 		sendEmailEvent.setContent("Contenido");
 		sendEmailEvent.setSubject("Subject");

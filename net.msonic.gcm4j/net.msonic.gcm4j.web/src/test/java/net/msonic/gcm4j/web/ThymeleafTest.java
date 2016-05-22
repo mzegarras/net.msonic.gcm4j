@@ -23,6 +23,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
+import org.thymeleaf.testing.templateengine.engine.TestExecutor;
 
 import net.msonic.gcm4j.web.be.TransaccionTO;
 
@@ -33,12 +34,15 @@ public class ThymeleafTest {
 	private static final Logger LOG = LogManager.getLogger(ThymeleafTest.class);
 	private static final Locale locale_default = Locale.ENGLISH;
 	private String htmlContent = null;
+	private TransaccionTO transaccionTO;
 	
 	private Document documentoHTML=null;
 	
 	@Autowired
 	private TemplateEngine templateEngine;
+	
 
+	
 	@Before
 	public void setUp() throws Exception {
 		LOG.debug("setUp");
@@ -51,7 +55,7 @@ public class ThymeleafTest {
 		Date fechaTransaccion =  df.parse(target);
 		
 		
-		TransaccionTO transaccionTO = new TransaccionTO();
+		transaccionTO = new TransaccionTO();
 		transaccionTO.setName("Manuel");
 		transaccionTO.setLastName("Zegarra");
 		transaccionTO.setFecha(fechaTransaccion);
@@ -72,7 +76,7 @@ public class ThymeleafTest {
 		
 	}
 
-	/*@Test
+	@Test
 	public void generateHTML() {
 
 		// Prepare the evaluation context
@@ -86,22 +90,22 @@ public class ThymeleafTest {
 
 		LOG.debug(htmlContent);
 
-	}*/
+	}
 
 	@Test
-	public void verificarNombreCliente() {
+	public void testNombreCliente() {
 		
 		Element table = documentoHTML.select("table.invoice").first();
 		Element row = table.select("tr").get(0);
 		Element col = row.select("td").get(0);
 		String label = col.text();
 		
-		assertEquals("Verificando Nombre Cliente",label,"Manuel");
+		assertEquals("Verificando Nombre Cliente",label,transaccionTO.getName());
 		
 	}
 	
 	@Test
-	public void verificarFechaHora() {
+	public void testFechaHora() {
 		
 		Element table = documentoHTML.select("table.invoice").first();
 		Element row = table.select("tr").get(1);
@@ -111,5 +115,46 @@ public class ThymeleafTest {
 		assertEquals("Verificando Fecha Transaccion",label,"27/09/1991 20:29");
 		
 	}
+	
+	
+	
+	@Test
+	public void testNumeroOperacion() {
+		
+		Element table = documentoHTML.select("table.invoice-items").first();
+		Element row = table.select("tr").get(0);
+		String label = row.select("td").get(0).text();
+		String value = row.select("td").get(1).text();
+		
+		assertEquals("Verificando label",label,"Número operación");
+		assertEquals("Verificando value",value,transaccionTO.getNumberTx());
+		
+	}
 
+	@Test
+	public void testCuentaCargo() {
+		
+		Element table = documentoHTML.select("table.invoice-items").first();
+		Element row = table.select("tr").get(1);
+		String label = row.select("td").get(0).text();
+		String value = row.select("td").get(1).text();
+		
+		
+		assertEquals("Verificando label",label,"Cuenta cargo");
+		assertEquals("Verificando value",value,transaccionTO.getCuentaCargoAlias());
+		
+	}
+	
+	@Test
+	public void testCuentaDestino() {
+		
+		Element table = documentoHTML.select("table.invoice-items").first();
+		Element row = table.select("tr").get(2);
+		String label = row.select("td").get(0).text();
+		String value = row.select("td").get(1).text();
+
+		assertEquals("Verificando label",label,"Cuenta destino");
+		assertEquals("Verificando value",value,transaccionTO.getCuentaDestino());
+		
+	}
 }
