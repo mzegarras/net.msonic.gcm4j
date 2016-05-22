@@ -1,0 +1,91 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head th:replace="fragments/headTag :: headTag">
+</head>
+
+
+
+
+
+<body>
+
+
+
+	<table class="body-wrap">
+		<tr>
+			<td></td>
+			<td class="container" width="600">
+				<div class="content">
+					<table class="main" width="100%" cellpadding="0" cellspacing="0">
+						<tr>
+							<td class="content-wrap aligncenter">
+								<table width="100%" cellpadding="0" cellspacing="0">
+									<tr>
+										<td class="content-block">
+											<h2>Thanks for using INSPINIA</h2>
+										</td>
+									</tr>
+									<tr>
+										<td class="content-block">
+											<table class="invoice">
+												<tr>
+													<td th:text="${transaccion.name}">Name</td>
+												</tr>
+												
+												<tr>
+													<td th:text="${transaccion.fecha}">Date</td>
+												</tr>
+												
+												<tr>
+													<td>
+														<table class="invoice-items" cellpadding="0"
+															cellspacing="0">
+															<tr>
+																<td>Número Operación</td>
+																<td class="alignright" th:text="${transaccion.numberTx}">1244</td>
+															</tr>
+															<tr>
+																<td>Cuenta Cargo</td>
+																<td class="alignright">
+																	<p th:text="${transaccion.cuentaCargo} + ' ' + ${transaccion.cuentaCargoMoneda}">Cuenta</p>
+																	<p th:text="${transaccion.cuentaCargoAlias}">Cuenta</p>
+																</td>
+															</tr>
+															<tr>
+																<td th:text="#{home.title}">Cuenta Destino</td>
+																<td class="alignright">
+																	<p th:text="${transaccion.cuentaDestino}">Cuenta</p>
+																	<p th:text="${transaccion.nombreDestino}">Alias</p>
+																</td>
+															</tr>
+															<tr class="total">
+																<td class="alignright" width="80%">Moneda y monto:</td>
+																<td class="alignright" th:text="${transaccion.moneda} + ' ' + ${transaccion.monto}">$ 36.00</td>
+															</tr>
+														</table>
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									
+								</table>
+							</td>
+						</tr>
+					</table>
+					<div class="footer" th:replace="fragments/footer :: footer"></div>
+				</div>
+			</td>
+			<td></td>
+		</tr>
+	</table>
+
+
+</body>
+
+
+
+</html>
