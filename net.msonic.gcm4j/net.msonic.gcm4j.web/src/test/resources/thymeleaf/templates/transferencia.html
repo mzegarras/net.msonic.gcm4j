@@ -34,6 +34,7 @@
 												<tr>
 													<td th:text="${transaccion.name}">Name</td>
 												</tr>
+											
 												
 												<tr th:with="df=#{date.format}">
 													<td th:text="${#dates.format(transaccion.fecha, df)}">Date</td>
