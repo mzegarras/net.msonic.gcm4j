@@ -14,10 +14,13 @@
 	<bean name="messageSource"
 		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
 		<property name="basename">
-			<!--value>i18n/messages</value-->
-			<value>file:/Users/manuelzegarra/git/net.msonic.gcm4j/net.msonic.gcm4j/net.msonic.gcm4j.web/src/test/resources/i18n/messages</value>
+			<!--value>i18n/messages</value -->
+			<value>file:/Users/manuelzegarra/git/net.msonic.gcm4j/net.msonic.gcm4j/net.msonic.gcm4j.web/src/test/resources/i18n/messages
+			</value>
 		</property>
 	</bean>
+
+
 
 
 
