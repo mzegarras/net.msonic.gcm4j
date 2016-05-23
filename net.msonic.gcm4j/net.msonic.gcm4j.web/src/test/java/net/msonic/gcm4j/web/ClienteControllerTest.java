@@ -44,6 +44,8 @@ public class ClienteControllerTest {
 	public void setUp() throws Exception {
 		this.testContextManager = new TestContextManager(getClass());
 		this.testContextManager.prepareTestInstance(this);
+		
+		
 	}
 
 	@Test
